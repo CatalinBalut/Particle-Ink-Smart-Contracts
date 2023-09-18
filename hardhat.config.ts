@@ -44,6 +44,10 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    // sepolia: {
+    //   url: process.env.RPC_URL_SEPOLIA ?? "",
+    //   accounts: [process.env.PRIVATE_KEY ?? ""]
+    // },
     hardhat: {
       blockGasLimit: 30_000_000,
       throwOnCallFailures: false,

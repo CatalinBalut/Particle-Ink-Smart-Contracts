@@ -12,16 +12,16 @@ import { PublicDrop } from "../src/lib/SeaDropStructs.sol";
 contract DeployAndConfigureExampleToken is Script {
     // Addresses
     address seadrop = 0x00005EA00Ac477B1030CE78506496e8C2dE24bf5;
-    address creator = 0x26faf8AE18d15Ed1CA0563727Ad6D4Aa02fb2F80;
-    address feeRecipient = 0x0000a26b00c1F0DF003000390027140000fAa719;
+    address creator = 0x555b03fD17Ca089feaCE5E68B31cAdf87424B488;
+    address feeRecipient = 0x555b03fD17Ca089feaCE5E68B31cAdf87424B488;
 
     // Token config
-    uint256 maxSupply = 100;
+    uint256 maxSupply = 2222;
 
     // Drop config
     uint16 feeBps = 500; // 5%
     uint80 mintPrice = 0.0001 ether;
-    uint16 maxTotalMintableByWallet = 5;
+    uint16 maxTotalMintableByWallet = 2;
 
     function run() external {
         vm.startBroadcast();

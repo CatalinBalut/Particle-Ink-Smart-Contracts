@@ -27,5 +27,5 @@ lcov*.info
 __pycache__
 
 # Use typescript instead of javascript
-*.js
+# *.js
 *.txt

@@ -1,6 +1,7 @@
 import "@nomiclabs/hardhat-waffle";
-import "@openzeppelin/hardhat-upgrades";
+// import "@openzeppelin/hardhat-upgrades";
 import "@nomiclabs/hardhat-etherscan";
+import 'dotenv/config';
 
 module.exports = {
   solidity: {
@@ -18,8 +19,8 @@ module.exports = {
     ],
   },
   networks: {
-    goerli: {
-      url: process.env.RPC_URL_GOERLI,
+    sepolia: {
+      url: process.env.RPC_URL_SEPOLIA,
       accounts: [process.env.PRIVATE_KEY],
     },
   },
