@@ -41,6 +41,8 @@ import {
     ERC721ContractMetadataStorage
 } from "./ERC721ContractMetadataStorage.sol";
 
+import {LibERC721GeneratorStorage} from './src-particleInk/Ethereum/libraries/LibERC721GeneratorStorage.sol';
+
 /**
  * @title  ERC721SeaDropUpgradeable
  * @author James Wenzel (emo.eth)
@@ -58,6 +60,9 @@ contract ERC721SeaDropUpgradeable is
 {
     using ERC721SeaDropStorage for ERC721SeaDropStorage.Layout;
     using ERC721ContractMetadataStorage for ERC721ContractMetadataStorage.Layout;
+    using LibERC721GeneratorStorage for LibERC721GeneratorStorage.Layout;
+
+    
 
     /**
      * @dev Reverts if not an allowed SeaDrop contract.
@@ -67,11 +72,10 @@ contract ERC721SeaDropUpgradeable is
      * @param seaDrop The SeaDrop address to check if allowed.
      */
     function _onlyAllowedSeaDrop(address seaDrop) internal view {
-        if (ERC721SeaDropStorage.layout()._allowedSeaDrop[seaDrop] != true) {
+        if (LibERC721GeneratorStorage.layout().erc721s[msg.sender].seaDropStorage._allowedSeaDrop[seaDrop] != true) {
             revert OnlyAllowedSeaDrop();
         }
     }
-
     /**
      * @notice Deploy the token contract with its name, symbol,
      *         and allowed SeaDrop addresses.

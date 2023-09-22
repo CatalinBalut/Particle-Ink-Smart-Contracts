@@ -17,51 +17,51 @@ contract ERC721Facade is IERC721, IERC721Metadata {
     }
 
     function name() external view returns (string memory){
-        return facet.erc721Name(address(this));
+        return facet.erc721Name();
     }
 
     function symbol() external view returns (string memory){
-        return facet.erc721Symbol(address(this));
+        return facet.erc721Symbol();
     }
 
-    function tokenURI(uint256 tokenId) external view returns (string memory){
-        return facet.tokenURI(address(this), tokenId);
+    function tokenURI(uint256 tokenId) public view returns (string memory){
+        return facet.erc721TokenURI(tokenId);
     }
 
     function balanceOf(address owner) external view override returns (uint256 balanace) {
-        return facet.erc721BalanceOf(address(this), owner);
+        return facet.erc721BalanceOf(owner);
     }
 
     function ownerOf(uint256 tokenId) external view override returns (address owner) {
-        return facet.erc721OwnerOf(address(this), tokenId);
+        return facet.erc721OwnerOf(tokenId);
     }
 
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external override {
-        return facet.erc721SafeTransferFrom(address(this), from, to, tokenId, data);
+        return facet.erc721SafeTransferFrom(from, to, tokenId, data);
     }
 
     function safeTransferFrom(address from, address to, uint256 tokenId) external override {
-        return facet.erc721SafeTransferFrom(address(this), from, to, tokenId);
+        return facet.erc721SafeTransferFrom(from, to, tokenId);
     }
 
     function transferFrom(address from, address to, uint256 tokenId) external override {
-        return facet.erc721TransferFrom(address(this), from, to, tokenId);
+        return facet.erc721TransferFrom(from, to, tokenId);
     }
 
     function approve(address to, uint256 tokenId) external override {
-        return facet.erc721Approve(address(this), to, tokenId);
+        return facet.erc721Approve(to, tokenId);
     }
 
     function setApprovalForAll(address operator, bool approved) external override {
-        return facet.erc721SetApprovalForAll(address(this), operator, approved);
+        return facet.erc721SetApprovalForAll(operator, approved);
     }
 
     function getApproved(uint256 tokenId) external view override returns (address operator) {
-        return facet.erc721GetApproved(address(this), tokenId);
+        return facet.erc721GetApproved(tokenId);
     }
 
     function isApprovedForAll(address owner, address operator) external view override returns (bool) {
-        return facet.erc721IsApprovedForAll(address(this), owner, operator);
+        return facet.erc721IsApprovedForAll(owner, operator);
     }
 
     function supportsInterface(bytes4 interfaceId) external view override returns (bool) {}

@@ -1,33 +1,17 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity ^0.8.17;
+
+import {ERC721Facade} from '../facades/ERC721Facade.sol';
+import {IERC721Facet} from '../interfaces/IERC721Facet.sol';
+
+import {LibERC721GeneratorStorage, ERC721CollectionConfig, ERC721Collection} 
+from '../libraries/LibERC721GeneratorStorage.sol';
 
 import {
     ERC721SeaDropUpgradeable
 } from "../../../ERC721SeaDropUpgradeable.sol";
 
-library LibERC721GeneratorStorage {
-    struct Layout {
-        /// @notice The only address that can burn tokens on this contract.
-        address burnAddress;
-    }
-
-    bytes32 internal constant STORAGE_SLOT =
-        keccak256("seaDrop.contracts.storage.exampleToken");
-
-    function layout() internal pure returns (Layout storage l) {
-        bytes32 slot = STORAGE_SLOT;
-        assembly {
-            l.slot := slot
-        }
-    }
-}
-
-/*
- * @notice This contract uses ERC721PartnerSeaDrop,
- *         an ERC721A token contract that is compatible with SeaDrop.
- *         The set burn address is the only sender that can burn tokens.
- */
-contract ERC721GeneratorFacet is ERC721SeaDropUpgradeable {
+contract ERC721GeneratorFacet is ERC721SeaDropUpgradeable, IERC721Facet {
     using LibERC721GeneratorStorage for LibERC721GeneratorStorage.Layout;
 
     /**
@@ -50,25 +34,91 @@ contract ERC721GeneratorFacet is ERC721SeaDropUpgradeable {
             allowedSeaDrop
         );
     }
-
-    function setBurnAddress(address newBurnAddress) external onlyOwner {
-        LibERC721GeneratorStorage.layout().burnAddress = newBurnAddress;
-    }
-
-    function getBurnAddress() public view returns (address) {
-        return LibERC721GeneratorStorage.layout().burnAddress;
-    }
-
+    /////////////////////
     /**
-     * @notice Destroys `tokenId`, only callable by the set burn address.
+     * @dev Reverts if not an allowed SeaDrop contract.
+     *      This function is inlined instead of being a modifier
+     *      to save contract space from being inlined N times.
      *
-     * @param tokenId The token id to burn.
+     * @param seaDrop The SeaDrop address to check if allowed.
      */
-    function burn(uint256 tokenId) external {
-        if (msg.sender != LibERC721GeneratorStorage.layout().burnAddress) {
-            revert BurnIncorrectSender();
-        }
-
-        _burn(tokenId);
+    function _onlyAllowedSeaDrop(address seaDrop) internal view {
+        // if (LibERC721GeneratorStorage.layout().erc721s[msg.sender].seaDropStorage._allowedSeaDrop[seaDrop] != true) {
+        //     revert OnlyAllowedSeaDrop();
+        // }
+        super._onlyAllowedSeaDrop()
     }
+    /////////////
+
+
+    function erc721DeployCollection(ERC721CollectionConfig memory config) external {
+        //enforce ownership
+        //if libstring...
+        // address nftCollection = address(new ERC721Facade(this));
+        //??
+        ERC721Collection storage t = LibERC721GeneratorStorage.layout().erc721s[msg.sender];
+        t.name = config.name;
+        t.symbol = config.symbol;
+        t.tokenURI = config.tokenURI;
+    }
+    //user -call> facade.sol -call> diamond -delegatecall-> ERC721GeneratorFacet (msg.sender ==facade.address) -> name(facade->)
+    //diamond -> nft1facet -> tokenURI()
+    //diamond -> nft2facet -> tokenURI()
+    function erc721Name() external view returns (string memory){
+        return LibERC721GeneratorStorage.layout().erc721s[msg.sender].name;
+        // return "aaainsidescaa";
+    }
+
+    function erc721Symbol() external view returns (string memory){
+        return LibERC721GeneratorStorage.layout().erc721s[msg.sender].symbol;
+    }
+
+    function erc721TokenURI(uint256 tokenId) external view returns (string memory){
+        return LibERC721GeneratorStorage.layout().erc721s[msg.sender].tokenURI;
+    }
+    
+    function tokenURI(uint256 tokenId) public override(ERC721SeaDropUpgradeable) view returns (string memory){
+        return LibERC721GeneratorStorage.layout().erc721s[msg.sender].tokenURI;
+    }
+
+    function erc721BalanceOf(address owner) external view returns(uint256 balanace) {
+        return 1;
+    }
+
+    function erc721OwnerOf(uint256 tokenId) external view returns (address owner){
+        return msg.sender;
+    }
+
+    function erc721SafeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external{
+    }
+
+    function erc721SafeTransferFrom(address from, address to, uint256 tokenId) external{
+
+    }
+
+    function erc721TransferFrom(address from, address to, uint256 tokenId) external{
+
+    }
+
+    function erc721Approve(address to, uint256 tokenId) external{
+
+    }
+    function erc721SetApprovalForAll(address operator, bool approved) external{
+
+    }
+
+    function erc721GetApproved(uint256 tokenId) external view returns (address operator){
+        return msg.sender;
+
+    }
+
+    function erc721IsApprovedForAll(address owner, address operator) external view returns (bool){
+        return true;
+
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view override returns (bool) {
+        super.supportsInterface(interfaceId);
+    }
+
 }

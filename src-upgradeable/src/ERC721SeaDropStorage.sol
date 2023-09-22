@@ -7,6 +7,7 @@ library ERC721SeaDropStorage {
         mapping(address => bool) _allowedSeaDrop;
         /// @notice Track the enumerated allowed SeaDrop addresses.
         address[] _enumeratedAllowedSeaDrop;
+
     }
 
     bytes32 internal constant STORAGE_SLOT =
