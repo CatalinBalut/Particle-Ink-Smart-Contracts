@@ -2,6 +2,7 @@ import "@nomiclabs/hardhat-waffle";
 // import "@openzeppelin/hardhat-upgrades";
 import "@nomiclabs/hardhat-etherscan";
 import 'dotenv/config';
+import'hardhat-storage-layout';
 
 module.exports = {
   solidity: {

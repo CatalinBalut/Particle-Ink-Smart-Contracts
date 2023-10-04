@@ -72,22 +72,29 @@ contract ERC721SeaDropUpgradeable is
         }
     }
 
-    /**
-     * @notice Deploy the token contract with its name, symbol,
-     *         and allowed SeaDrop addresses.
-     */
     function __ERC721SeaDrop_init(
         string memory name,
         string memory symbol,
         address[] memory allowedSeaDrop
-    ) internal onlyInitializing {
+    ) internal {
         __ERC721A_init_unchained(name, symbol);
-        __ConstructorInitializable_init_unchained();
-        __TwoStepOwnable_init_unchained();
         __ERC721ContractMetadata_init_unchained(name, symbol);
+        __ERC721SeaDrop_init_unchained(name, symbol, allowedSeaDrop);
+    }
+
+    /**
+     * @notice Deploy the token contract with its name, symbol,
+     *         and allowed SeaDrop addresses.
+     */
+    function __ERC721SeaDrop_init_once(
+    ) internal {
+        // __ERC721A_init_unchained(name, symbol);
+        __ConstructorInitializable_init_unchained();
+        // __TwoStepOwnable_init_unchained();
+        // __ERC721ContractMetadata_init_unchained(name, symbol);
         __ReentrancyGuard_init_unchained();
         __DefaultOperatorFilterer_init();
-        __ERC721SeaDrop_init_unchained(name, symbol, allowedSeaDrop);
+        // __ERC721SeaDrop_init_unchained(name, symbol, allowedSeaDrop);
     }
 
     function __ERC721SeaDrop_init_unchained(
@@ -474,7 +481,7 @@ contract ERC721SeaDropUpgradeable is
      * @param minter The minter address.
      */
     function getMintStats(address minter)
-        external
+        public
         view
         override
         returns (

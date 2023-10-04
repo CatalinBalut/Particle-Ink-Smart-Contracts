@@ -809,6 +809,11 @@
     "@types/sinon-chai" "^3.2.3"
     "@types/web3" "1.0.19"
 
+"@openzeppelin/contracts-upgradeable@^4.9.3":
+  version "4.9.3"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts-upgradeable/-/contracts-upgradeable-4.9.3.tgz#ff17a80fb945f5102571f8efecb5ce5915cc4811"
+  integrity sha512-jjaHAVRMrE4UuZNfDwjlLGDxTHWIOwTJS2ldnc278a0gevfXfPr8hxKEVBGFBE96kl2G3VHDZhUimw/+G3TG2A==
+
 "@openzeppelin/contracts@^4.9.3":
   version "4.9.3"
   resolved "https://registry.npmjs.org/@openzeppelin/contracts/-/contracts-4.9.3.tgz"
@@ -2930,6 +2935,13 @@ concat-stream@^1.5.1, concat-stream@^1.6.0, concat-stream@^1.6.2:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
+
+console-table-printer@^2.9.0:
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/console-table-printer/-/console-table-printer-2.11.2.tgz#549757033a7e3cde7e26e030038c9392ce600ee5"
+  integrity sha512-uuUHie0sfPP542TKGzPFal0W1wo1beuKAqIZdaavcONx8OoqdnJRKjkinbRTOta4FaCa1RcIL+7mMJWX3pQGVg==
+  dependencies:
+    simple-wcswidth "^1.0.1"
 
 convert-source-map@^1.5.1:
   version "1.8.0"
@@ -5055,6 +5067,13 @@ hardhat-preprocessor@^0.1.5:
   integrity sha512-j8m44mmPxpxAAd0G8fPHRHOas/INZdzptSur0TNJvMEGcFdLDhbHHxBcqZVQ/bmiW42q4gC60AP4CXn9EF018g==
   dependencies:
     murmur-128 "^0.2.1"
+
+hardhat-storage-layout@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/hardhat-storage-layout/-/hardhat-storage-layout-0.1.7.tgz#ad8a5afd8593ee51031eb1dd9476b4a2ed981785"
+  integrity sha512-q723g2iQnJpRdMC6Y8fbh/stG6MLHKNxa5jq/ohjtD5znOlOzQ6ojYuInY8V4o4WcPyG3ty4hzHYunLf66/1+A==
+  dependencies:
+    console-table-printer "^2.9.0"
 
 hardhat@^2.11.1:
   version "2.11.1"
@@ -8241,6 +8260,11 @@ signal-exit@^3.0.2, signal-exit@^3.0.7:
   version "3.0.7"
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+simple-wcswidth@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/simple-wcswidth/-/simple-wcswidth-1.0.1.tgz#8ab18ac0ae342f9d9b629604e54d2aa1ecb018b2"
+  integrity sha512-xMO/8eNREtaROt7tJvWJqHBDTMFN4eiQ5I4JRMuilwfnFcV5W9u7RUkueNkdw0jPqGMX36iCywelS5yilTuOxg==
 
 slash@^1.0.0:
   version "1.0.0"

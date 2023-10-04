@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
+import {SlotGenerator} from './Ethereum/libraries/SlotGenerator.sol';
 
 library ERC721SeaDropStorage {
     struct Layout {
@@ -12,10 +13,12 @@ library ERC721SeaDropStorage {
     bytes32 internal constant STORAGE_SLOT =
         keccak256("openzepplin.contracts.storage.ERC721SeaDrop");
 
-    function layout() internal pure returns (Layout storage l) {
-        bytes32 slot = STORAGE_SLOT;
+    function layout() internal view returns (Layout storage l) {
+        bytes memory concatenatedBytes = abi.encodePacked(STORAGE_SLOT, SlotGenerator.luminSlot().collectionName[msg.sender]);
+        bytes32 slot = keccak256(concatenatedBytes);
         assembly {
             l.slot := slot
         }
     }
 }
+

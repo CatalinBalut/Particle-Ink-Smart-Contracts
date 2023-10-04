@@ -10,6 +10,8 @@ import {
     ISeaDropTokenContractMetadataUpgradeable
 } from "./interfaces/ISeaDropTokenContractMetadataUpgradeable.sol";
 
+import {SlotGenerator} from './Ethereum/libraries/SlotGenerator.sol';
+
 library ERC721ContractMetadataStorage {
     struct Layout {
         /// @notice Track the max supply.
@@ -29,8 +31,9 @@ library ERC721ContractMetadataStorage {
     bytes32 internal constant STORAGE_SLOT =
         keccak256("openzepplin.contracts.storage.ERC721ContractMetadata");
 
-    function layout() internal pure returns (Layout storage l) {
-        bytes32 slot = STORAGE_SLOT;
+    function layout() internal view returns (Layout storage l) {
+        bytes memory concatenatedBytes = abi.encodePacked(STORAGE_SLOT, SlotGenerator.luminSlot().collectionName[msg.sender]);
+        bytes32 slot = keccak256(concatenatedBytes);
         assembly {
             l.slot := slot
         }

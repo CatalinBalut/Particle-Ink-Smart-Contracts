@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-
 library SlotGenerator {
 
     bytes32 internal constant LUMIN_STORAGE = keccak256("lumins.storage");

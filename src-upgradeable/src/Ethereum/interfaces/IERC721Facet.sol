@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+struct ERC721CollectionConfig {
+    string name;
+    string symbol;
+    string tokenURI;
+}
+
 interface IERC721Facet{
+
+    function erc721DeployCollection(string memory name, string memory symbol, address[] memory allowedSeaDrop) external;
 
     //IERC721 Metadata//
 

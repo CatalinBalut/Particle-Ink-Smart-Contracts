@@ -7,6 +7,12 @@ import {IERC721Facet} from "../interfaces/IERC721Facet.sol";
 
 import "hardhat/console.sol";
 
+struct ERC721CollectionConfig {
+    string name;
+    string symbol;
+    string tokenURI;
+}
+
 contract ERC721Facade is IERC721, IERC721Metadata {
 
     IERC721Facet public facet;
@@ -16,7 +22,12 @@ contract ERC721Facade is IERC721, IERC721Metadata {
 
     }
 
+    function deployCollection(string memory name, string memory symbol, address[] memory allowedSeaDrop) external{
+        facet.erc721DeployCollection(name, symbol, allowedSeaDrop);
+    }
+
     function name() external view returns (string memory){
+        console.log("erc721Facade - name - ", facet.erc721Name());
         return facet.erc721Name();
     }
 

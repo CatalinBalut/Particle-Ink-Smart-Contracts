@@ -3,8 +3,10 @@ pragma solidity ^0.8.17;
 
 // import {ERC721AStorage} from '../../../../../src-upgradeable/contracts/ERC721AStorage';
 
-import {ERC721ContractMetadataStorage} from '../../../ERC721ContractMetadataStorage.sol';
-import {ERC721SeaDropStorage} from '../../../ERC721SeaDropStorage.sol';
+import {ERC721ContractMetadataStorage} from '../../ERC721ContractMetadataStorage.sol';
+import {ERC721SeaDropStorage} from '../../ERC721SeaDropStorage.sol';
+import '../../lib/SeaDropStructsUpgradeable.sol';
+import '../../lib/ERC721SeaDropStructsErrorsAndEventsUpgradeable.sol';
 
 import {SlotGenerator} from './SlotGenerator.sol';
 
@@ -17,22 +19,23 @@ struct ERC721CollectionConfig {
 }
 
 struct ERC721Collection {
-    bytes32 STORAGE_SLOT;
-    
+    //I can move all the structs inside this struct and it should work
+    //or
+    //I can concat the storage slot keccak of each storage with the generator.
     string name;
     string symbol;
     string tokenURI;
     
     ERC721ContractMetadataStorage.Layout metadataStorage;
-    // ERC721SeaDropStorage.Layout seaDropStorage;
+    ERC721SeaDropStorage.Layout seaDropStorage;
     
 }
 
 library LibERC721GeneratorStorage {
 
     struct Layout {
-        //optimization: ERC721Collection erc721
-        mapping(address => ERC721Collection) erc721s;
+        // mapping(address => ERC721Collection) erc721s;
+        ERC721Collection erc721;
     }
 
     function layout() internal view returns (Layout storage l) {
@@ -40,11 +43,6 @@ library LibERC721GeneratorStorage {
         assembly {
             l.slot := slot
         }
-    }
-
-    function getName(address facade) internal view returns (string memory) {
-        ERC721Collection storage collection = LibERC721GeneratorStorage.layout().erc721s[facade];
-        return collection.name;
     }
 
 }
